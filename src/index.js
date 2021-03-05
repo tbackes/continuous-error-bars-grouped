@@ -57,6 +57,8 @@ const hex_to_rgba_str = (hex_color, opacity) => {
   return rgba
 }
 
+const isDate = (d) => {return d instanceof Date && isFinite(d)}
+
 const toDate = (dateString) => {
   let year = dateString.substring(0,4)
   let month = dateString.substring(4,6)-1
@@ -122,7 +124,7 @@ const drawViz = message => {
   const customdata = message.tables.DEFAULT.map(d => [d.metric_lower[0], d.metric_upper[0]]); 
   const hovertemplate = `<b>%{y:${metricFmt}}</b><i> (%{customdata[0]:${ciFmt}} - %{customdata[1]:${ciFmt}})</i>`;
 
-  const xData = xAxisDate
+  const xData = xAxisDate && isDate(toDate(message.tables.DEFAULT[0].dimension[0]))
     ? message.tables.DEFAULT.map(d => toDate(d.dimension[0])) 
     : message.tables.DEFAULT.map(d => d.dimension[0]);
 
