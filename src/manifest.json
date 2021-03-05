@@ -1,6 +1,6 @@
 {
   "name": "Continuous Error Bars - Grouped",
-  "organization": "(dev) tbackes",
+  "organization": "tbackes",
   "description": "Grouped line plot with continuous error bars, generated using plotly.js.",
   "logoUrl": "https://logo",
   "organizationUrl": "https://url",
