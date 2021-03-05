@@ -170,10 +170,10 @@
           "defaultValue": "false"
         },
         {
-          "id": "metricShowCI1",
-          "label": "Show CI #1?",
+          "id": "metricHideCI1",
+          "label": "Hide CI #1 on initial load?",
           "type": "CHECKBOX",
-          "defaultValue": "true"
+          "defaultValue": "false"
         }
       ]
     }
@@ -217,10 +217,10 @@
           "defaultValue": "false"
         },
         {
-          "id": "metricShowCI2",
-          "label": "Show CI #2?",
+          "id": "metricHideCI2",
+          "label": "Hide CI #2 on initial load?",
           "type": "CHECKBOX",
-          "defaultValue": "true"
+          "defaultValue": "false"
         }
       ]
     }
@@ -264,10 +264,10 @@
           "defaultValue": "false"
         },
         {
-          "id": "metricShowCI3",
-          "label": "Show CI #3?",
+          "id": "metricHideCI3",
+          "label": "Hide CI #3 on initial load?",
           "type": "CHECKBOX",
-          "defaultValue": "true"
+          "defaultValue": "false"
         }
       ]
     }
@@ -311,10 +311,10 @@
           "defaultValue": "false"
         },
         {
-          "id": "metricShowCI4",
-          "label": "Show CI #4?",
+          "id": "metricHideCI4",
+          "label": "Hide CI #4 on initial load?",
           "type": "CHECKBOX",
-          "defaultValue": "true"
+          "defaultValue": "false"
         }
       ]
     }
@@ -358,10 +358,10 @@
           "defaultValue": "false"
         },
         {
-          "id": "metricShowCI5",
-          "label": "Show CI #5?",
+          "id": "metricHideCI5",
+          "label": "Hide CI #5 on initial load?",
           "type": "CHECKBOX",
-          "defaultValue": "true"
+          "defaultValue": "false"
         }
       ]
     }
@@ -405,10 +405,10 @@
           "defaultValue": "false"
         },
         {
-          "id": "metricShowCI6",
-          "label": "Show CI #6?",
+          "id": "metricHideCI6",
+          "label": "Hide CI #6 on initial load?",
           "type": "CHECKBOX",
-          "defaultValue": "true"
+          "defaultValue": "false"
         }
       ]
     }
@@ -452,10 +452,10 @@
           "defaultValue": "false"
         },
         {
-          "id": "metricShowCI7",
-          "label": "Show CI #7?",
+          "id": "metricHideCI7",
+          "label": "Hide CI #7 on initial load?",
           "type": "CHECKBOX",
-          "defaultValue": "true"
+          "defaultValue": "false"
         }
       ]
     }
@@ -499,10 +499,10 @@
           "defaultValue": "false"
         },
         {
-          "id": "metricShowCI8",
-          "label": "Show CI #8?",
+          "id": "metricHideCI8",
+          "label": "Hide CI #8 on initial load?",
           "type": "CHECKBOX",
-          "defaultValue": "true"
+          "defaultValue": "false"
         }
       ]
     }
@@ -546,10 +546,57 @@
           "defaultValue": "false"
         },
         {
-          "id": "metricShowCI9",
-          "label": "Show CI #9?",
+          "id": "metricHideCI9",
+          "label": "Hide CI #9 on initial load?",
           "type": "CHECKBOX",
-          "defaultValue": "true"
+          "defaultValue": "false"
+        }
+      ]
+    }
+    ,
+    {
+      "id": "metricStyles10",
+      "label": "Metric #10",
+      "elements": [
+        {
+          "id": "metricLineWeight10",
+          "label": "Line Weight 10",
+          "type": "LINE_WEIGHT",
+          "defaultValue": "2"
+        },
+        {
+          "id": "metricColor10",
+          "label": "Line Color 10",
+          "type": "BORDER_COLOR",
+          "defaultValue": {
+            "color": ""
+          }
+        },
+        {
+          "id": "metricFillColor10",
+          "label": "CI Fill Color 10",
+          "type": "BORDER_COLOR",
+          "defaultValue": {
+            "color": ""
+          }
+        },
+        {
+          "id": "metricFillOpacity10",
+          "label": "CI Fill Opacity 10",
+          "type": "OPACITY",
+          "defaultValue": "0.1"
+        },
+        {
+          "id": "metricShowPoints10",
+          "label": "Show Points",
+          "type": "CHECKBOX",
+          "defaultValue": "false"
+        },
+        {
+          "id": "metricHideCI10",
+          "label": "Hide CI #10 on initial load?",
+          "type": "CHECKBOX",
+          "defaultValue": "false"
         }
       ]
     }

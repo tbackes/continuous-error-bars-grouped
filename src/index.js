@@ -96,7 +96,8 @@ const drawViz = message => {
   // console.log("I'm the callback and I was passed this data: " + JSON.stringify(message.style, null, '  '));
   // console.log("Theme data: " + JSON.stringify(message.theme, null, '  '));
 
-  //gather plot-level style parameters
+  // gather plot-level style parameters
+  // -------------------------
   const chartTitle = styleVal(message, 'chartTitle');
   const xAxisDate = styleVal(message, 'xAxisDate');
   const xLabel = styleVal(message, 'xLabel');
@@ -107,10 +108,17 @@ const drawViz = message => {
   const ciFmt = styleVal(message, 'ciFormatString');
 
   // get unique breakdown groups
+  // -------------------------
   const breakdown_values = [...new Set(message.tables.DEFAULT.map(d => d.dimension_breakdown[0]))];
   console.log('All groups: ' + breakdown_values)
+  let n_groups = breakdown_values.length
+  if (breakdown_values.length > 10){
+    console.log(`More than 10 group by categories provided (n=${n_groups}). Truncating to only plot first 10.`)
+    n_groups = 10
+  }
 
   // Gather re-used data
+  // -------------------------
   const customdata = message.tables.DEFAULT.map(d => [d.metric_lower[0], d.metric_upper[0]]); 
   const hovertemplate = `<b>%{y:${metricFmt}}</b><i> (%{customdata[0]:${ciFmt}} - %{customdata[1]:${ciFmt}})</i>`;
 
@@ -119,20 +127,18 @@ const drawViz = message => {
     : message.tables.DEFAULT.map(d => d.dimension[0]);
 
   // loop through breadown groups and add traces
+  // -------------------------
   let data = []
   let i;
-  for (i=0; i<breakdown_values.length; i++){
-    // console.log('i: '+i)
-
-    // Gather all style parameters
-    // series properties
+  for (i=0; i<n_groups; i++){
+    // Gather all style parameters for series
     const metricLineWeight =  styleVal(message, 'metricLineWeight'+(i+1));
     const metricLineColor =  themeColor(message, 'metricColor'+(i+1), 'themeSeriesColor', i);
     const metricFillColor =  hex_to_rgba_str(
       themeColor(message, 'metricFillColor'+(i+1), 'themeSeriesColor', i),
       styleVal(message, 'metricFillOpacity'+(i+1)));
     const metricShowPoints =  styleVal(message, 'metricShowPoints'+(i+1));
-    const metricShowCI =  styleVal(message, 'metricShowCI'+(i+1));
+    const metricHideCI =  styleVal(message, 'metricHideCI'+(i+1));
 
     // trace for metric trend line
     const trace_metric = {
@@ -173,7 +179,7 @@ const drawViz = message => {
       type: "scatter",
       legendgroup: 'ci'+i,
       hoverinfo: 'skip', 
-      visible: (metricShowCI)? true : 'legendonly',
+      visible: (metricHideCI)? 'legendonly' : true,
       showlegend: false
     };
 
@@ -197,68 +203,44 @@ const drawViz = message => {
       type: "scatter",
       legendgroup: 'ci'+i,
       hoverinfo: 'skip', 
-      visible: (metricShowCI)? true : 'legendonly',
+      visible: (metricHideCI)? 'legendonly' : true,
       showlegend: true
     };
 
     data.push(trace_metric, trace_lower, trace_upper);
   }
 
-  // format for y axis
-  let yAxisRange = {};
+  // Chart Titles
+  // -------------------------
+  const chartTitleLayout = isNull(chartTitle) ? {} : {text: chartTitle};
+  const xAxisLayout = isNull(xLabel) ? {} : {title: {text: xLabel}};
+  const yAxisLayout = isNull(yLabel) ? {} : {title: {text: yLabel}};
+
+  // format y-axis range
+  // -------------------------
   if (!isNumeric(yAxisMin) && !isNumeric(yAxisMax)){
-    yAxisRange = {};
+    yAxisLayout.range = 'auto'
   }
   else if (!isNumeric(yAxisMin)){
     const minValue = Math.min.apply(Math, message.tables.DEFAULT.map(function(d) {return Math.min(...d.metric_lower)}));
-    yAxisRange = {range: [Math.floor(0.9*minValue), yAxisMax]};
+    yAxisLayout.range = [Math.floor(0.9*minValue), yAxisMax];
   }
   else if (!isNumeric(yAxisMax)){
     const maxValue = Math.max.apply(Math, message.tables.DEFAULT.map(function(d) {return Math.max(...d.metric_upper)}));
-    yAxisRange = {range: [yAxisMin, Math.ceil(1.1*maxValue)]};
+    yAxisLayout.range = [yAxisMin, Math.ceil(1.1*maxValue)];
   }
-  else {
-    yAxisRange = {range: [yAxisMin, yAxisMax]};
-  }
-
-  // Chart Titles
-  let chartTitleLayout = {};
-  if (isNull(chartTitle)) {
-    chartTitleLayout = {}
-  }
-  else {
-    chartTitleLayout = {text: chartTitle}
+  else{
+    yAxisLayout.range = [yAxisMin, yAxisMax];
   }
 
-  let yAxisTitleLayout = {};
-  if (isNull(yLabel)) {
-    yAxisTitleLayout = {title: {}}
-  }
-  else {
-    yAxisTitleLayout = {title: {text: yLabel}}
-  }
-
-  let xAxisTitleLayout = {};
-  if (isNull(xLabel)) {
-    xAxisTitleLayout = {title: {}}
-  }
-  else {
-    xAxisTitleLayout = {title: {text: xLabel}}
-  }
-
+  // Layout config
+  // -------------------------
   const layout = {
     height: height+60,
     showlegend: true,
-    yaxis: Object.assign({}, yAxisRange, yAxisTitleLayout, {tickformat: metricFmt}),
-    xaxis: Object.assign({}, xAxisTitleLayout),
+    yaxis: yAxisLayout,
+    xaxis: xAxisLayout,
     title: chartTitleLayout,
-    // legend: {
-    //   orientation: 'h',
-    //   yanchor: "bottom",
-    //   y: 1.02,
-    //   xanchor: "right",
-    //   x: 1
-    // }
   };
 
   plotly.newPlot(myDiv, data, layout);
