@@ -214,7 +214,7 @@ const drawViz = message => {
   // -------------------------
   const chartTitleLayout = isNull(chartTitle) ? {} : {text: chartTitle};
   const xAxisLayout = isNull(xLabel) ? {} : {title: {text: xLabel}};
-  const yAxisLayout = isNull(yLabel) ? {} : {title: {text: yLabel}};
+  const yAxisLayout = isNull(yLabel) ? {tickformat: metricFmt} : {tickformat: metricFmt, title: {text: yLabel}};
 
   // format y-axis range
   // -------------------------
@@ -223,11 +223,11 @@ const drawViz = message => {
   }
   else if (!isNumeric(yAxisMin)){
     const minValue = Math.min.apply(Math, message.tables.DEFAULT.map(function(d) {return Math.min(...d.metric_lower)}));
-    yAxisLayout.range = [Math.floor(0.9*minValue), yAxisMax];
+    yAxisLayout.range = [0.9*minValue, yAxisMax];
   }
   else if (!isNumeric(yAxisMax)){
     const maxValue = Math.max.apply(Math, message.tables.DEFAULT.map(function(d) {return Math.max(...d.metric_upper)}));
-    yAxisLayout.range = [yAxisMin, Math.ceil(1.1*maxValue)];
+    yAxisLayout.range = [yAxisMin, 1.1*maxValue];
   }
   else{
     yAxisLayout.range = [yAxisMin, yAxisMax];

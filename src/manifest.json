@@ -1,6 +1,6 @@
 {
   "name": "Continuous Error Bars - Grouped",
-  "organization": "tbackes",
+  "organization": "(dev) tbackes",
   "description": "Grouped line plot with continuous error bars, generated using plotly.js.",
   "logoUrl": "https://logo",
   "organizationUrl": "https://url",
@@ -8,7 +8,7 @@
   "privacyPolicyUrl": "https://url",
   "termsOfServiceUrl": "https://url",
   "packageUrl": "https://url",
-  "devMode": "DEVMODE_BOOL",
+  "devMode": "true",
   "components": [
     {
       "name": "continuous-error-bars-grouped",
