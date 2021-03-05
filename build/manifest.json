@@ -15,9 +15,9 @@
       "description": "Grouped line plot with continuous error bars.",
       "iconUrl": "https://url",
       "resource": {
-        "js": "gs://tbackes_viz/continuous-error-bars-grouped-dev/index.js",
-        "config": "gs://tbackes_viz/continuous-error-bars-grouped-dev/index.json",
-        "css": "gs://tbackes_viz/continuous-error-bars-grouped-dev/index.css"
+        "js": "gs://tbackes_viz/continuous-error-bars-grouped/index.js",
+        "config": "gs://tbackes_viz/continuous-error-bars-grouped/index.json",
+        "css": "gs://tbackes_viz/continuous-error-bars-grouped/index.css"
       }
     }
   ]
