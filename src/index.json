@@ -62,7 +62,7 @@
       "label": "Breakdown Sort Order",
       "elements": [
         {
-          "id": "breadown_sort_order",
+          "id": "breakdown_sort_order",
           "label": "Metric",
           "type": "METRIC",
           "options": {

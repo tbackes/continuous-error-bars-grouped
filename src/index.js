@@ -1,5 +1,4 @@
 const d3 = require('d3');
-const lodash = require('lodash');
 const plotly = require('plotly.js-dist');
 const dscc = require('@google/dscc');
 const local = require('./localMessage.js');
@@ -151,7 +150,7 @@ const drawViz = message => {
   // Get sorted list of breakdown labels
   const sortAggFunc = styleVal(message, "sortAggFunc");
   const sortAscend = styleVal(message, "sortAscend") == 'Ascending';
-  const breakdown_values = getAggSortOrder(sortAggFunc, sortAscend, message, "dimension_breakdown", "breadown_sort_order")
+  const breakdown_values = getAggSortOrder(sortAggFunc, sortAscend, message, "dimension_breakdown", "breakdown_sort_order")
   // const breakdown_values = [...new Set(message.tables.DEFAULT.map(d => d.dimension_breakdown[0]))];
   console.log('Sorted groups: ' + breakdown_values)
   let n_groups = breakdown_values.length
@@ -169,7 +168,7 @@ const drawViz = message => {
     ? message.tables.DEFAULT.map(d => toDate(d.dimension[0])) 
     : message.tables.DEFAULT.map(d => d.dimension[0]);
 
-  // loop through breadown groups and add traces
+  // loop through breakdown groups and add traces
   // -------------------------
   let data = []
   let i;
@@ -178,7 +177,6 @@ const drawViz = message => {
     const metricLineWeight =  styleVal(message, 'metricLineWeight'+(i+1));
     const metricLineColor =  themeColor(message, 'metricColor'+(i+1), 'themeSeriesColor', i);
     const metricFillOpacity = styleVal(message, 'metricFillOpacity'+(i+1))
-    console.log(metricLineColor, metricFillOpacity)
     const metricFillColor =  hex_to_rgba_str(metricLineColor, metricFillOpacity);
     const metricShowPoints =  styleVal(message, 'metricShowPoints'+(i+1));
     const metricHideCI =  styleVal(message, 'metricHideCI'+(i+1));

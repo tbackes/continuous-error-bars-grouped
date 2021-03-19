@@ -17,7 +17,7 @@ export const message = {
         "metric_upper": [
           2
         ],
-        "breadown_sort_order": [
+        "breakdown_sort_order": [
           2
         ]
       },
@@ -37,7 +37,7 @@ export const message = {
         "metric_upper": [
           3
         ],
-        "breadown_sort_order": [
+        "breakdown_sort_order": [
           2
         ]
       },
@@ -57,7 +57,7 @@ export const message = {
         "metric_upper": [
           2.5
         ],
-        "breadown_sort_order": [
+        "breakdown_sort_order": [
           2
         ]
       },
@@ -77,7 +77,7 @@ export const message = {
         "metric_upper": [
           4
         ],
-        "breadown_sort_order": [
+        "breakdown_sort_order": [
           2
         ]
       },
@@ -97,7 +97,7 @@ export const message = {
         "metric_upper": [
           3.5
         ],
-        "breadown_sort_order": [
+        "breakdown_sort_order": [
           2
         ]
       },
@@ -117,7 +117,7 @@ export const message = {
         "metric_upper": [
           5
         ],
-        "breadown_sort_order": [
+        "breakdown_sort_order": [
           5
         ]
       },
@@ -137,7 +137,7 @@ export const message = {
         "metric_upper": [
           3.1
         ],
-        "breadown_sort_order": [
+        "breakdown_sort_order": [
           5
         ]
       },
@@ -157,7 +157,7 @@ export const message = {
         "metric_upper": [
           4.1
         ],
-        "breadown_sort_order": [
+        "breakdown_sort_order": [
           5
         ]
       },
@@ -177,7 +177,7 @@ export const message = {
         "metric_upper": [
           5.2
         ],
-        "breadown_sort_order": [
+        "breakdown_sort_order": [
           5
         ]
       }
@@ -252,7 +252,7 @@ export const message = {
         "concept": "METRIC"
       }
     ],
-    "breadown_sort_order": [
+    "breakdown_sort_order": [
       {
         "id": "djlkjsjfjjf",
         "name": "Sort Order",
