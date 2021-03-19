@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "d3": "^6.5.0",
+    "lodash": "^4.17.21",
     "plotly": "^1.0.6",
     "plotly.js-dist": "^1.58.4"
   }

@@ -1,4 +1,5 @@
 const d3 = require('d3');
+const lodash = require('lodash');
 const plotly = require('plotly.js-dist');
 const dscc = require('@google/dscc');
 const local = require('./localMessage.js');
@@ -30,7 +31,7 @@ const styleVal = (message, styleId) => {
 // parse a style color -- defaulting to the theme color if applicable
 const themeColor = (message, styleId, themeId='themeSeriesColor', idx=null) => {
   // if a user specifed value is present, keep that
-  if (message.style[styleId].value.color !== undefined) {
+  if (message.style[styleId].value.color !== undefined && !isNull(message.style[styleId].value.color)) {
     return message.style[styleId].value.color;
   }
   // otherwise use the theme color
@@ -74,6 +75,42 @@ Date.prototype.addDays = function(days) {
     return new Date(this.valueOf()+(24*60*60*days))
 }
 
+// Function that allows you to group array `xs`` by `key`, and returns the result of the 
+// reducing function `red` which uses default value []
+const groupBy = function(xs, key, red = (acc, curr) => ([...acc, curr]), init = []) {
+  return xs.reduce(function(rv, curr) {
+    let acc = rv[curr[key]] || init;
+    return { ...rv, [curr[key]]: red(acc, curr)};
+  }, {});
+};
+
+const getAggSortOrder = (aggFunc, sortAscend, message, groupName, sortName) => {
+
+  // calculate aggregate metrics by group
+  const reduceFun = (red, x) => {
+    return {
+      "count": red.count+1, 
+      "sum": red.sum + x[sortName][0], 
+      "avg": (red.sum + x[sortName][0]) / (red.count + 1),
+      "min": Math.min(red.min, x[sortName][0]),
+      "max": Math.max(red.max, x[sortName][0])
+    }
+  };
+  const init = {'count': 0, 'sum': 0, 'min': null, 'max': null};
+  const groupMetrics = groupBy(message.tables.DEFAULT, groupName, reduceFun, init);
+
+  // sort list of groups by the specified metric:
+  const sortedGroups = Object.entries(groupMetrics)
+    .sort(
+      sortAscend 
+      ? ([,a],[,b]) => (a[aggFunc] - b[aggFunc])
+      : ([,a],[,b]) => (b[aggFunc] - a[aggFunc])
+    )
+    .reduce((red, [k, v]) => {red.push(k); return red}, []);
+
+  return sortedGroups
+};
+
 const drawViz = message => {
 
   // set margins + canvas size
@@ -84,7 +121,7 @@ const drawViz = message => {
   // remove the div if it already exists
   if (document.querySelector("div")) {
     let oldDiv = document.querySelector("div");
-    oldDiv.parentNode.removeChild(oldDiv);
+    oldDiv.remove();
   }
 
   // create div for plotly plot
@@ -111,8 +148,12 @@ const drawViz = message => {
 
   // get unique breakdown groups
   // -------------------------
-  const breakdown_values = [...new Set(message.tables.DEFAULT.map(d => d.dimension_breakdown[0]))];
-  console.log('All groups: ' + breakdown_values)
+  // Get sorted list of breakdown labels
+  const sortAggFunc = styleVal(message, "sortAggFunc");
+  const sortAscend = styleVal(message, "sortAscend") == 'Ascending';
+  const breakdown_values = getAggSortOrder(sortAggFunc, sortAscend, message, "dimension_breakdown", "breadown_sort_order")
+  // const breakdown_values = [...new Set(message.tables.DEFAULT.map(d => d.dimension_breakdown[0]))];
+  console.log('Sorted groups: ' + breakdown_values)
   let n_groups = breakdown_values.length
   if (breakdown_values.length > 10){
     console.log(`More than 10 group by categories provided (n=${n_groups}). Truncating to only plot first 10.`)
@@ -136,9 +177,9 @@ const drawViz = message => {
     // Gather all style parameters for series
     const metricLineWeight =  styleVal(message, 'metricLineWeight'+(i+1));
     const metricLineColor =  themeColor(message, 'metricColor'+(i+1), 'themeSeriesColor', i);
-    const metricFillColor =  hex_to_rgba_str(
-      themeColor(message, 'metricFillColor'+(i+1), 'themeSeriesColor', i),
-      styleVal(message, 'metricFillOpacity'+(i+1)));
+    const metricFillOpacity = styleVal(message, 'metricFillOpacity'+(i+1))
+    console.log(metricLineColor, metricFillOpacity)
+    const metricFillColor =  hex_to_rgba_str(metricLineColor, metricFillOpacity);
     const metricShowPoints =  styleVal(message, 'metricShowPoints'+(i+1));
     const metricHideCI =  styleVal(message, 'metricHideCI'+(i+1));
 

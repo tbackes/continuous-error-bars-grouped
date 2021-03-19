@@ -16,6 +16,9 @@ export const message = {
         ],
         "metric_upper": [
           2
+        ],
+        "breadown_sort_order": [
+          2
         ]
       },
       {
@@ -33,6 +36,9 @@ export const message = {
         ],
         "metric_upper": [
           3
+        ],
+        "breadown_sort_order": [
+          2
         ]
       },
       {
@@ -50,6 +56,9 @@ export const message = {
         ],
         "metric_upper": [
           2.5
+        ],
+        "breadown_sort_order": [
+          2
         ]
       },
       {
@@ -67,6 +76,9 @@ export const message = {
         ],
         "metric_upper": [
           4
+        ],
+        "breadown_sort_order": [
+          2
         ]
       },
       {
@@ -84,6 +96,9 @@ export const message = {
         ],
         "metric_upper": [
           3.5
+        ],
+        "breadown_sort_order": [
+          2
         ]
       },
       {
@@ -100,6 +115,9 @@ export const message = {
           4.2
         ],
         "metric_upper": [
+          5
+        ],
+        "breadown_sort_order": [
           5
         ]
       },
@@ -118,6 +136,9 @@ export const message = {
         ],
         "metric_upper": [
           3.1
+        ],
+        "breadown_sort_order": [
+          5
         ]
       },
       {
@@ -135,6 +156,9 @@ export const message = {
         ],
         "metric_upper": [
           4.1
+        ],
+        "breadown_sort_order": [
+          5
         ]
       },
       {
@@ -152,6 +176,9 @@ export const message = {
         ],
         "metric_upper": [
           5.2
+        ],
+        "breadown_sort_order": [
+          5
         ]
       }
     ]
@@ -224,12 +251,28 @@ export const message = {
         "type": "NUMBER",
         "concept": "METRIC"
       }
+    ],
+    "breadown_sort_order": [
+      {
+        "id": "djlkjsjfjjf",
+        "name": "Sort Order",
+        "type": "NUMBER",
+        "concept": "METRIC"
+      }
     ]
   },
   "style": {
     "chartTitle": {
       "value": "Grouped<br>Try multiline",
       "defaultValue": ""
+    },
+    "sortAggFunc": {
+      "value": "max",
+      "defaultValue": "avg"
+    },
+    "sortAscend": {
+      "value": "Ascending",
+      "defaultValue": "Descending"
     },
     "xAxisDate": {
       "value": false,
@@ -331,15 +374,15 @@ export const message = {
       "value": true,
       "defaultValue": true
     },
-    "metricShowCI1": {
+    "metricHideCI1": {
       "value": true,
       "defaultValue": false
     },
-    "metricShowCI2": {
+    "metricHideCI2": {
       "value": false,
       "defaultValue": false
     },
-    "metricShowCI3": {
+    "metricHideCI3": {
       "value": false,
       "defaultValue": false
     },
